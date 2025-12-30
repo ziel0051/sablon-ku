@@ -9,12 +9,20 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/client": "^5.7.0",
+    "fabric": "^7.0.0",
+    "framer-motion": "^12.23.26",
+    "lucide-react": "^0.562.0",
     "next": "16.1.1",
+    "next-auth": "^5.0.0-beta.30",
+    "prisma": "^5.7.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/fabric": "^5.3.10",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

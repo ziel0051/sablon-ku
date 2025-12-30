@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String   @db.Text // WAJIB: Agar bisa menampung artikel panjang
+  image     String?  // URL gambar thumbnail
+  createdAt DateTime @default(now())
+}
+
+model Portfolio {
+  id        String   @id @default(cuid())
+  title     String
+  image     String
+  category  String
+  createdAt DateTime @default(now())
+}
