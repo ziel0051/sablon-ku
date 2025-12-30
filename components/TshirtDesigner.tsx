@@ -46,9 +46,6 @@ export default function TshirtDesigner() {
       
       imgElement.onload = () => {
         if (!isMounted) return;
-
-        // PERBAIKAN UTAMA DI SINI UNTUK TYPESCRIPT
-        // Kita cek lagi apakah canvasRef.current ada
         if (!canvasRef.current) return;
 
         if (canvasInstanceRef.current) {
@@ -58,7 +55,7 @@ export default function TshirtDesigner() {
         const aspectRatio = imgElement.width / imgElement.height;
         const calculatedHeight = (containerWidth / aspectRatio) + 50; 
 
-        // Tambahkan tanda seru (!) atau 'as HTMLCanvasElement' agar TS tidak error
+        // Fix TypeScript: Gunakan tanda seru (!)
         const newCanvas = new fabricModule.Canvas(canvasRef.current!, {
           width: containerWidth,
           height: calculatedHeight,
@@ -91,8 +88,11 @@ export default function TshirtDesigner() {
         let lastPosX = 0;
         let lastPosY = 0;
 
+        // --- FIX TYPESCRIPT DI SINI ---
         newCanvas.on('mouse:down', function(opt) {
-          const evt = opt.e;
+          // Paksa jadi 'any' agar TS tidak rewel soal clientX
+          const evt = opt.e as any; 
+          
           if (opt.target) return;
           
           if (newCanvas.getZoom() > 1 || newCanvas.defaultCursor === 'grab') {
@@ -105,7 +105,9 @@ export default function TshirtDesigner() {
 
         newCanvas.on('mouse:move', function(opt) {
           if (isDragging) {
-            const e = opt.e;
+            // Paksa jadi 'any' di sini juga
+            const e = opt.e as any;
+            
             const vpt = newCanvas.viewportTransform!;
             vpt[4] += e.clientX - lastPosX;
             vpt[5] += e.clientY - lastPosY;
@@ -114,6 +116,7 @@ export default function TshirtDesigner() {
             lastPosY = e.clientY;
           }
         });
+        // ------------------------------
 
         newCanvas.on('mouse:up', function() {
           if (isDragging) {
